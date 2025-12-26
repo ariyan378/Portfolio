@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hridoy - Data Analyst Portfolio</title>
+    <style>
+        :root {
+            --primary: #0f67d9;
+            --secondary: #1e90ff;
+            --accent: #22c55e;
+            --text-dark: #1a2332;
+            --text-light: #6b7280;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #f0f4f8 0%, #ffffff 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-switcher {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-light);
+            padding: 0.35rem;
+            border-radius: 20px;
+        }
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .theme-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-container { gap: 1rem; }
+        }
+
+        /* Header Hero */
+        header {
+            margin-top: 80px;
+            background: linear-gradient(135deg, #0f67d9 0%, #1e90ff 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+            border-radius: 50%;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 3rem;
+            justify-content: center;
+        }
+
+        .profile-photo-container {
+            position: relative;
+            cursor: pointer;
+            group: 'photo';
+            flex-shrink: 0;
+        }
+
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-photo-container:hover .profile-photo {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .photo-upload-label {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .photo-upload-label:hover {
+            transform: scale(1.1);
+            background: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            animation: slideUp 0.6s ease-out 0.1s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        /* Education */
+        .education-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .education-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .degree-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .edu-note {
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+
+        .skill-card:nth-child(2) { border-top-color: #3776ab; }
+        .skill-card:nth-child(3) { border-top-color: #f57c00; }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .skill-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .skill-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .skill-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Projects & Certificates */
+        .projects-grid, .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            border-left: 5px solid var(--primary);
+        }
+
+        .card:nth-child(2) { border-left-color: #2f7d32; }
+        .card:nth-child(3) { border-left-color: #c2185b; }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .card p {
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: #999;
+            font-style: italic;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .tools {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(180deg, #1a2540 0%, #0f1724 100%);
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 4rem;
+            font-size: 0.95rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            header .subtitle { font-size: 1.1rem; }
+            h2 { font-size: 1.8rem; }
+            .skills-grid, .projects-grid, .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+            .cta-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Hridoy</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certificates">Certificates</a></li>
+            </ul>
+            <div class="theme-switcher">
+                <button class="theme-btn active" title="Light">☀️</button>
+                <button class="theme-btn" title="Dark">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Hero -->
+    <header>
+        <div class="header-content">
+            <div class="profile-photo-container">
+                <img id="profilePhoto" src="photo.jpeg" alt="Hridoy" class="profile-photo" />
+                <label for="photoUpload" class="photo-upload-label">
+                    <i class="fas fa-camera"></i>
+                </label>
+                <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+            </div>
+            <h1>Hridoy</h1>
+            <p class="subtitle">Data Analyst   Excel | Python | SQL</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="resume.pdf" class="btn btn-secondary">Download Resume</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- About -->
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>I'm a passionate data analyst dedicated to transforming raw data into actionable insights that drive business decisions. Currently studying Computer Science and Engineering at Daffodil International University, I combine academic knowledge with practical experience in data analysis, visualization, and business intelligence. My expertise spans Excel, Python, and SQL, enabling me to handle diverse analytical challenges across the data pipeline.</p>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section>
+            <h2>Education</h2>
+            <div class="education-card">
+                <h3>Daffodil International University</h3>
+                <div class="degree-badge">B.Sc in Computer Science & Engineering</div>
+                <p class="edu-note">Pursuing a comprehensive education in CSE with focus on data science and analytics. Building strong foundations in algorithms, databases, and software engineering principles.</p>
+            </div>
+        </section>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hridoy - Data Analyst Portfolio</title>
+    <style>
+        :root {
+            --primary: #0f67d9;
+            --secondary: #1e90ff;
+            --accent: #22c55e;
+            --text-dark: #1a2332;
+            --text-light: #6b7280;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #f0f4f8 0%, #ffffff 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid var(--border);
+            background: white;
+            color: var(--text-dark);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Improved Projects/Certificates Grid */
+        .projects-grid, .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card, .cert-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: 2px solid transparent;
+        }
+
+        .project-card:hover, .cert-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        /* Card Header with Icon Background */
+        .card-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .project-card:nth-child(2) .card-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .project-card:nth-child(3) .card-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .cert-card:nth-child(2) .card-header {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .cert-card:nth-child(3) .card-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        /* Tools/Tech Stack */
+        .tools-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f0f4f8;
+            border-radius: 10px;
+        }
+
+        .tools-label {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .tools-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .tool-tag {
+            background: white;
+            color: var(--primary);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--primary);
+            transition: all 0.2s;
+        }
+
+        .tool-tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Card Footer */
+        .card-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fafbfc;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .card-meta strong {
+            color: var(--text-dark);
+        }
+
+        .view-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .view-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        /* Status indicators */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-issued {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card, .cert-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .projects-grid, .certificates-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .card-header {
+                padding: 1.5rem;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .card-footer {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .filter-tabs {
+                justify-content: flex-start;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Projects Section -->
+    <div class="container">
+        <section id="projects">
+            <h2>Projects</h2>
+            <p class="section-subtitle">Explore my data analytics projects showcasing real-world problem-solving and technical expertise.</p>
+            
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="excel">Excel</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="sql">SQL</button>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card" data-category="excel">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Sales Analysis Dashboard</h3>
+                            <span class="card-badge">Interactive Dashboard</span>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">Developed an interactive Excel dashboard analyzing quarterly sales performance across multiple regions and product categories with dynamic filtering and KPI tracking.</p>
+                        <div class="tools-section">
+                            <label class="tools-label">Tools & Technologies</label>
+                            <div class="tools-list">
+                                <span class="tool-tag">Excel</span>
+                                <span class="tool-tag">Power Query</span>
+                                <span class="tool-tag">Pivot Tables</span>
+                                <span class="tool-tag">Charts</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><strong>Completed:</strong> 2024</span>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="python">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Customer Behavior Analysis</h3>
+                            <span class="card-badge">ML Project</span>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">Built a Python-based analysis tool to identify customer purchasing patterns and segment audiences based on behavioral metrics using machine learning techniques.</p>
+                        <div class="tools-section">
+                            <label class="tools-label">Tools & Technologies</label>
+                            <div class="tools-list">
+                                <span class="tool-tag">Python</span>
+                                <span class="tool-tag">Pandas</span>
+                                <span class="tool-tag">Scikit-learn</span>
+                                <span class="tool-tag">Matplotlib</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><strong>Completed:</strong> 2024</span>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="sql">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">SQL Database Optimization</h3>
+                            <span class="card-badge">Database Design</span>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">Designed and optimized relational databases with complex queries, indexes, and stored procedures to improve data retrieval performance by 40%.</p>
+                        <div class="tools-section">
+                            <label class="tools-label">Tools & Technologies</label>
+                            <div class="tools-list">
+                                <span class="tool-tag">SQL</span>
+                                <span class="tool-tag">Database Design</span>
+                                <span class="tool-tag">Query Optimization</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><strong>Completed:</strong> 2024</span>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates Section -->
+        <section id="certificates">
+            <h2>Certifications</h2>
+            <p class="section-subtitle">Professional certifications validating expertise in key data analytics technologies.</p>
+            
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">All Certificates</button>
+                <button class="filter-btn" data-filter="excel">Excel</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="sql">SQL</button>
+            </div>
+
+            <div class="certificates-grid">
+                <div class="cert-card" data-category="excel">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Data Analysis with Excel</h3>
+                            <span class="card-badge">Professional</span>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">Professional certification demonstrating expertise in advanced Excel techniques including pivot tables, VLOOKUP, and data visualization for business analytics.</p>
+                        <div class="tools-section">
+                            <label class="tools-label">Skills Covered</label>
+                            <div class="tools-list">
+                                <span class="tool-tag">Pivot Tables</span>
+                                <span class="tool-tag">VLOOKUP</span>
+                                <span class="tool-tag">Visualization</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><strong>Issued:</strong> 2024</span>
+                        <a href="#" class="view-btn">View Certificate</a>
+                    </div>
+                </div>
+
+                <div class="cert-card" data-category="python">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Python for Data Science</h3>
+                            <span class="card-badge">Advanced</span>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">Comprehensive training in Python programming for data manipulation, analysis, and visualization with hands-on projects and real-world datasets.</p>
+                        <div class="tools-section">
+                            <label class="tools-label">Skills Covered</label>
+                            <div class="tools-list">
+                                <span class="tool-tag">Pandas</span>
+                                <span class="tool-tag">NumPy</span>
+                                <span class="tool-tag">Data Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><strong>Issued:</strong> 2024</span>
+                        <a href="#" class="view-btn">View Certificate</a>
+                    </div>
+                </div>
+
+                <div class="cert-card" data-category="sql">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">SQL Mastery Course</h3>
+                            <span class="card-badge">Expert Level</span>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">Advanced certification in SQL covering database design, complex queries, performance optimization, and practical application in data warehousing.</p>
+                        <div class="tools-section">
+                            <label class="tools-label">Skills Covered</label>
+                            <div class="tools-list">
+                                <span class="tool-tag">Query Design</span>
+                                <span class="tool-tag">Optimization</span>
+                                <span class="tool-tag">Warehousing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><strong>Issued:</strong> 2024</span>
+                        <a href="#" class="view-btn">View Certificate</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filterGroup = this.parentElement;
+                const cards = filterGroup.nextElementSibling.querySelectorAll('[data-category]');
+                
+                // Update active button
+                filterGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filterValue = this.dataset.filter;
+                
+                // Filter cards
+                cards.forEach(card => {
+                    if (filterValue === 'all' || card.dataset.category === filterValue) {
+                        card.style.display = '';
+                        setTimeout(() => card.style.animation = 'fadeInUp 0.6s ease-out', 10);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
